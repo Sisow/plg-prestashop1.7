@@ -40,11 +40,9 @@
 - Kbc/cbc  
 
 ## [5.0.0] - 2017-12-15
-###   
 - Capayable  
 
 ## [4.9.0] - 2017-11-20
-###   
 - Belfius  
 - Afteroat b2b choise  
 
