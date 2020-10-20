@@ -1,5 +1,9 @@
 # Changelog  
 
+## [5.4.3] - 2020-10-20
+### Changed  
+- Config: 'Update Purchase ID after payment complete' to order ID or Reference ID   
+
 ## [5.4.2] - 2020-07-10
 ### Fixed  
 - Rename Capayble -> In3  

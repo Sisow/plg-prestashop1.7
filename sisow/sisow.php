@@ -192,7 +192,7 @@ class Sisow extends PaymentModule
 						'name'      => 'SISOW_UPDATEPURCHASEID',                              // The content of the 'id' attribute of the <input> tag.
 						'required'  => false,                                  // If set to true, this option must be set.
 						'class'     => 't',                                   // The content of the 'class' attribute of the <label> tag for the <input> tag.
-						'is_bool'   => true,                                  // If set to true, this means you want to display a yes/no or true/false option.
+						'is_bool'   => false,                                  // If set to true, this means you want to display a yes/no or true/false option.
 																				// The CSS styling will therefore use green mark for the option value '1', and a red mark for value '2'.
 																				// If set to false, this means there can be more than two radio buttons,
 																				// and the option label text will be displayed instead of marks.
@@ -200,8 +200,13 @@ class Sisow extends PaymentModule
 							array(
 								'id'    => 'active_on',                           // The content of the 'id' attribute of the <input> tag, and of the 'for' attribute for the <label> tag.
 								'value' => 1,                                     // The content of the 'value' attribute of the <input> tag.   
-								'label' => $this->l('Enabled')                    // The <label> for this radio button.
+								'label' => $this->l('Enabled, use Order ID')                    // The <label> for this radio button.
 								),
+                            array(
+                                'id'    => 'active_on',                           // The content of the 'id' attribute of the <input> tag, and of the 'for' attribute for the <label> tag.
+                                'value' => 2,                                     // The content of the 'value' attribute of the <input> tag.
+                                'label' => $this->l('Enabled, use Reference ID')                    // The <label> for this radio button.
+                            ),
 							array(
 								'id'    => 'active_off',
 								'value' => 0,
@@ -617,9 +622,9 @@ class Sisow extends PaymentModule
 					false, 
 					$cart->secure_key);
 					
-				if((bool)Configuration::get('SISOW_UPDATEPURCHASEID')){
+				if((int)Configuration::get('SISOW_UPDATEPURCHASEID') > 0){
 				    $new_id = $this->currentOrder;
-				    if (false) { // true to use Reference ID as id
+				    if ((int)Configuration::get('SISOW_UPDATEPURCHASEID') == 2) { // true to use Reference ID as id
                         $order = new Order($this->currentOrder);
                         $new_id = $order->reference;
                     }
