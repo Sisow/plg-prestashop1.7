@@ -1,5 +1,10 @@
 # Changelog  
 
+## [5.4.3b] - 2020-10-22
+### Added
+- Minimum and maximum setting for payment methodes
+- Set order to selected order state on 'success' 
+
 ## [5.4.3] - 2020-10-20
 ### Changed  
 - Config: 'Update Purchase ID after payment complete' to order ID or Reference ID   

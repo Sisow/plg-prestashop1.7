@@ -116,6 +116,12 @@ class Sisow extends PaymentModule
 				Configuration::updateValue('SISOW_PAYMENTMETHODS_' . $method['id'], Tools::getValue('SISOW_PAYMENTMETHODS_' . $method['id']));
 				
 				Configuration::updateValue('SISOW_SORTORDER_' . $method['id'], Tools::getValue('SISOW_SORTORDER_' . $method['id']));
+                Configuration::updateValue('SISOW_MINORDER_' . $method['id'], Tools::getValue('SISOW_MINORDER_' . $method['id']));
+                Configuration::updateValue('SISOW_MAXORDER_' . $method['id'], Tools::getValue('SISOW_MAXORDER_' . $method['id']));
+
+                if($method['id'] != 'overboeking') {
+                    Configuration::updateValue('SISOW_ORDERSUCCESSTATE_' . $method['id'], Tools::getValue('SISOW_ORDERSUCCESSTATE_' . $method['id']));
+                }
 				
 				if($method['id'] != 'focum' && $method['id'] != 'spraypay')
 					Configuration::updateValue('SISOW_TESTMODE_' . $method['id'], Tools::getValue('SISOW_TESTMODE_' . $method['id']));
@@ -320,6 +326,33 @@ class Sisow extends PaymentModule
                         'label' => $this->l('Sort Order'),
                         'name' => 'SISOW_SORTORDER_' . $method['id']
 					);
+
+                $input[] = array(
+                    'type' => 'text',
+                    'label' => $this->l('Minimum order value'),
+                    'name' => 'SISOW_MINORDER_' . $method['id']
+                );
+
+                $input[] = array(
+                    'type' => 'text',
+                    'label' => $this->l('Maximum order value'),
+                    'name' => 'SISOW_MAXORDER_' . $method['id']
+                );
+
+                if($method['id'] != 'overboeking') {
+                    $input[] = array(
+                        'type' => 'select',                              // This is a <select> tag.
+                        'label' => $this->l('Order Succes state'),         // The <label> for this <select> tag.
+                        'desc' => $this->l('Choose a order success status'),  // A help text, displayed right next to the <select> tag.
+                        'name' => 'SISOW_ORDERSUCCESSTATE_' . $method['id'],                   // The content of the 'id' attribute of the <select> tag.
+                        'required' => false,                              // If set to true, this option must be set.
+                        'options' => array(
+                            'query' => array_merge(['' => ''],OrderStateCore::getOrderStates($this->context->cookie->id_lang)),                           // $options contains the data itself.
+                            'id' => 'id_order_state',                           // The value of the 'id' key must be the same as the key for 'value' attribute of the <option> tag in each $options sub-array.
+                            'name' => 'name'                               // The value of the 'name' key must be the same as the key for the text content of the <option> tag in each $options sub-array.
+                        )
+                    );
+                }
 				
 				if($method['id'] != 'focum' && $method['id'] != 'spraypay')
 				{
@@ -438,7 +471,9 @@ class Sisow extends PaymentModule
 				);
 				
 				$field_values['SISOW_SORTORDER_' . $method['id']] = Tools::getValue('SISOW_SORTORDER_' . $method['id'], Configuration::get('SISOW_SORTORDER_' . $method['id']));
-				
+                $field_values['SISOW_MINORDER_' . $method['id']] = Tools::getValue('SISOW_MINORDER_' . $method['id'], Configuration::get('SISOW_MINORDER_' . $method['id']));
+                $field_values['SISOW_MAXORDER_' . $method['id']] = Tools::getValue('SISOW_MAXORDER_' . $method['id'], Configuration::get('SISOW_MAXORDER_' . $method['id']));
+                $field_values['SISOW_ORDERSUCCESSTATE_' . $method['id']] = Tools::getValue('SISOW_ORDERSUCCESSTATE_' . $method['id'], Configuration::get('SISOW_ORDERSUCCESSTATE_' . $method['id']));
 				
 				foreach(Country::getCountries($this->context->cookie->id_lang, true) as $country)
 					$field_values['SISOW_COUNTRY_' . $method['id'] . '_' . $country['id_country']] = Tools::getValue('SISOW_COUNTRY_' . $method['id'] . '_' . $country['id_country'], Configuration::get('SISOW_COUNTRY_' . $method['id'] . '_' . $country['id_country']));
@@ -467,7 +502,7 @@ class Sisow extends PaymentModule
 
         return $this->_html;
     }
-	
+
 	public function hookPaymentOptions($params)
     {		
         if (!$this->active) {
@@ -512,6 +547,20 @@ class Sisow extends PaymentModule
 			
 			if($anyCountryOn && !$countryAllowed)
 				continue;
+
+			// show on price
+            $total = $this->context->cart->getOrderTotal(true, Cart::BOTH);
+           $minorder = Configuration::get('SISOW_MINORDER_' . $method['id']);
+            $maxorder = Configuration::get('SISOW_MAXORDER_' . $method['id']);
+
+			if (!empty($minorder) && is_numeric($minorder)) {
+			    if ($total < (float)$minorder)
+			        continue;
+            }
+            if (!empty($maxorder) && is_numeric($maxorder)) {
+                if ($total > (float)$maxorder)
+                    continue;
+            }
 			
 			$newOption = new PaymentOption();
 			
@@ -570,7 +619,7 @@ class Sisow extends PaymentModule
 		$shopid = Configuration::get('SISOW_SHOPID');
 		$payment = Tools::getValue('payment');
 		
-		$paymentName;
+		$paymentName = null;
 		
 		foreach($this->paymentMethods as $k => $v)
 		{
@@ -586,7 +635,7 @@ class Sisow extends PaymentModule
 		{
 			exit('Transaction ID failed');
 		}
-		
+
 		if($payment == 'overboeking')
 		{
 			if($sisow->status == 'Success' || $sisow->status == 'Paid' || $sisow->status == 'Reservation')
@@ -603,6 +652,17 @@ class Sisow extends PaymentModule
 		{
 			if($sisow->status == 'Success' || $sisow->status == 'Paid' || $sisow->status == 'Reservation')
 			{
+                $orderSuccessStatus = (int)Configuration::get('SISOW_ORDERSUCCESSTATE_' . $payment);
+
+                // Check order success status id > 0
+                if($orderSuccessStatus < 1){
+                    $orderSuccessStatus = Configuration::get('PS_OS_PAYMENT');
+
+                    if($orderSuccessStatus < 1){
+                        exit('No Success status defined');
+                    }
+                }
+
 				$cart = new Cart($cartId);
 				
 				if ($cart->id_customer == 0 || $cart->id_address_delivery == 0 || $cart->id_address_invoice == 0 || !$this->active){
@@ -613,7 +673,7 @@ class Sisow extends PaymentModule
 				
 				$this->validateOrder(
 					$cart->id,
-					Configuration::get('PS_OS_PAYMENT'), 
+                    $orderSuccessStatus,
 					$amountPaid, 
 					$paymentName, 
 					null, 
