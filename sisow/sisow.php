@@ -550,7 +550,7 @@ class Sisow extends PaymentModule
 
 			// show on price
             $total = $this->context->cart->getOrderTotal(true, Cart::BOTH);
-           $minorder = Configuration::get('SISOW_MINORDER_' . $method['id']);
+            $minorder = Configuration::get('SISOW_MINORDER_' . $method['id']);
             $maxorder = Configuration::get('SISOW_MAXORDER_' . $method['id']);
 
 			if (!empty($minorder) && is_numeric($minorder)) {
