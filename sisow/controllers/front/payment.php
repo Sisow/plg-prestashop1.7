@@ -220,7 +220,17 @@ class SisowPaymentModuleFrontController extends ModuleFrontController
 		}
 		/* end */
 
-		if(!$sisow->TransactionRequest($payment, $this->context->cart->id, $total, $currency->iso_code, (bool)$testmode, $description, $returnUrl, $cancelUrl, $notifyUrl, $callbackUrl, $entranceCode))
+		// Set default purchase ID to cart ID.
+		$purchaseid = $this->context->cart->id;
+
+		if( (bool)Configuration::get('SISOW_UPDATEPURCHASEID') ){
+			if ( ! empty( $this->module->currentOrder ) ) {
+				// Set order ID.
+				$purchaseid = $this->module->currentOrder;
+			}
+		}
+
+		if(!$sisow->TransactionRequest($payment, $purchaseid, $total, $currency->iso_code, (bool)$testmode, $description, $returnUrl, $cancelUrl, $notifyUrl, $callbackUrl, $entranceCode))
 		{
 			if($payment == 'afterpay')
 				$this->errors[] = 'Het spijt ons u te moeten mededelen dat uw aanvraag om uw bestelling achteraf te betalen op dit moment niet door AfterPay wordt geaccepteerd. Dit kan om diverse (tijdelijke) redenen zijn.Voor vragen over uw afwijzing kunt u contact opnemen met de Klantenservice van AfterPay. Of kijk op de website van AfterPay bij “Veel gestelde vragen” via de link http://www.afterpay.nl/page/consument-faq onder het kopje “Gegevenscontrole”. Wij adviseren u voor een andere betaalmethode te kiezen om alsnog de betaling van uw bestelling af te ronden.';
