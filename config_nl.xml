@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <module>
     <name>sisow</name>
-    <displayName><![CDATA[Sisow Betaalmethoden]]></displayName>
+    <displayName><![CDATA[Buckaroo Betaalmethoden (former Sisow)]]></displayName>
     <version><![CDATA[5.4.3]]></version>
-    <description><![CDATA[Met deze module kunt u de Sisow betaalmethode]]></description>
-    <author><![CDATA[Sisow]]></author>
+    <description><![CDATA[Met deze module kunt u de Buckaroo betaalmethode]]></description>
+    <author><![CDATA[Buckaroo B.V.]]></author>
     <tab><![CDATA[payments_gateways]]></tab>
-	<confirmUninstall><![CDATA[Weet u zeker dat u Sisow wilt verwijderen?]]></confirmUninstall>
+	<confirmUninstall><![CDATA[Weet u zeker dat u Buckaroo wilt verwijderen?]]></confirmUninstall>
     <is_configurable>1</is_configurable>
     <need_instance>1</need_instance>
 	<limited_countries></limited_countries>

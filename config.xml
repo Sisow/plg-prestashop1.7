@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <module>
     <name>sisow</name>
-    <displayName><![CDATA[Sisow Payment Methods]]></displayName>
+    <displayName><![CDATA[Buckaroo Payments (former Sisow)]]></displayName>
     <version><![CDATA[5.4.3]]></version>
-    <description><![CDATA[This module allows you to accept payments with Sisow.]]></description>
-    <author><![CDATA[Sisow]]></author>
+    <description><![CDATA[This module allows you to accept payments with Buckaroo.]]></description>
+    <author><![CDATA[Buckaroo B.V.]]></author>
     <tab><![CDATA[payments_gateways]]></tab>
 	<confirmUninstall><![CDATA[Are you sure you want to delete these details?]]></confirmUninstall>
     <is_configurable>1</is_configurable>
