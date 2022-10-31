@@ -14,7 +14,7 @@ class Sisow extends PaymentModule
 		$this->name = 'sisow';
         $this->tab = 'payments_gateways';
         $this->version = '5.4.3';
-        $this->author = 'Sisow';
+        $this->author = 'Buckaroo B.V.';
         $this->controllers = array('payment', 'validation');
 		
 		$this->currencies = true;
@@ -23,8 +23,8 @@ class Sisow extends PaymentModule
 		$this->bootstrap = true;
         parent::__construct();
 		
-		$this->displayName = $this->l('Sisow Payment Methods');
-        $this->description = $this->l('This module allows you to accept payments with Sisow.');
+		$this->displayName = $this->l('Buckaroo Payments (former Sisow)');
+        $this->description = $this->l('This module allows you to accept payments with Buckaroo.');
         $this->confirmUninstall = $this->l('Are you sure you want to delete these details?');
         $this->ps_versions_compliancy = array('min' => '1.7.0.0', 'max' => _PS_VERSION_);
 
@@ -93,9 +93,9 @@ class Sisow extends PaymentModule
 		$this->_postErrors = array();
         if (Tools::isSubmit('btnSubmit')) {
             if (!Tools::getValue('SISOW_MERCHANTID')) {
-                $this->_postErrors[] = $this->l('The "Merchant ID" field is required.');
+                $this->_postErrors[] = $this->l('The "Website" field is required.');
             } elseif (!Tools::getValue('SISOW_MERCHANTKEY')) {
-                $this->_postErrors[] = $this->l('The "Merchant Key" field is required.');
+                $this->_postErrors[] = $this->l('The "Secret Key" field is required.');
             }
         }
     }
@@ -163,19 +163,19 @@ class Sisow extends PaymentModule
 		$fields_form[0] = array(
             'form' => array(
                 'legend' => array(
-                    'title' => $this->l('Sisow General Settings'),
+                    'title' => $this->l('Buckaroo General Settings'),
                     'icon' => 'icon-cog'
                 ),
                 'input' => array(
                     array(
                         'type' => 'text',
-                        'label' => $this->l('Merchant ID'),
+                        'label' => $this->l('Website Key'),
                         'name' => 'SISOW_MERCHANTID',
                         'required' => true
                     ),
                     array(
                         'type' => 'text',
-                        'label' => $this->l('Merchant Key'),
+                        'label' => $this->l('Secret Key'),
                         'name' => 'SISOW_MERCHANTKEY',
                         'required' => true
                     ),
@@ -278,7 +278,7 @@ class Sisow extends PaymentModule
 		$fields_form[1] = array(
             'form' => array(
                 'legend' => array(
-                    'title' => $this->l('Sisow Payment Methods'),
+                    'title' => $this->l('Buckaroo Payments (former Sisow)'),
                     'icon' => 'icon-sliders'
                 ),
                 'input' => array(

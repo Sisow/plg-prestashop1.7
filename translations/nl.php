@@ -2,7 +2,7 @@
 
 global $_MODULE;
 $_MODULE = array();
-$_MODULE['<{sisow}prestashop>sisow_7ada06bfb1a57c521db6b8b8b31210f3'] = 'Sisow Betaalmethoden';
+$_MODULE['<{sisow}prestashop>sisow_7ada06bfb1a57c521db6b8b8b31210f3'] = 'Buckaroo (former Sisow) Betaalmethoden';
 $_MODULE['<{sisow}prestashop>sisow_e1c23cb83fae1bcaf41335f46ad42155'] = 'Met deze module kunt u de Sisow betaalmethode';
 $_MODULE['<{sisow}prestashop>sisow_e09484ba6c16bc20236b63cc0d87ee95'] = 'Weet u zeker dat u Sisow wilt verwijderen?';
 $_MODULE['<{sisow}prestashop>sisow_f91ab041fe9d6057740394b8b7903a0f'] = 'iDEAL';
@@ -29,12 +29,12 @@ $_MODULE['<{sisow}prestashop>sisow_28f57cdfcb4b83ff63aeab5109c748a2'] = 'CBC bet
 $_MODULE['<{sisow}prestashop>sisow_c19e9a1e083d8d95d85b4c8d0af9cd53'] = 'KBC betaalknop';
 $_MODULE['<{sisow}prestashop>sisow_5de8a8ea61f408e79d5dc3f673d98b71'] = 'Spraypay Gespreid Betalen';
 $_MODULE['<{sisow}prestashop>sisow_39adc28a3f71e78b936fef338f64d67c'] = 'Klarna Achteraf Betalen';
-$_MODULE['<{sisow}prestashop>sisow_fda7c46bab8d07f5d9c716e7dcb1a41c'] = 'Het veld \"Merchant ID\" is verplicht';
-$_MODULE['<{sisow}prestashop>sisow_3f0138e2229a6619d337627f58901cec'] = 'Het veld \"Merchant Key\" is verplicht';
+$_MODULE['<{sisow}prestashop>sisow_fda7c46bab8d07f5d9c716e7dcb1a41c'] = 'Het veld \"Website Key\" is verplicht';
+$_MODULE['<{sisow}prestashop>sisow_3f0138e2229a6619d337627f58901cec'] = 'Het veld \"Secret Key\" is verplicht';
 $_MODULE['<{sisow}prestashop>sisow_c888438d14855d7d96a2724ee9c306bd'] = 'Instellingen bijgewerkt';
 $_MODULE['<{sisow}prestashop>sisow_719d5a9448fa8744e65c98a276381208'] = 'Sisow Algemene instellingen';
-$_MODULE['<{sisow}prestashop>sisow_229a7ec501323b94db7ff3157a7623c9'] = 'Merchant ID';
-$_MODULE['<{sisow}prestashop>sisow_795acb9a0c89791314d3032fe65eeb92'] = 'Merchant Key';
+$_MODULE['<{sisow}prestashop>sisow_229a7ec501323b94db7ff3157a7623c9'] = 'Website Key';
+$_MODULE['<{sisow}prestashop>sisow_795acb9a0c89791314d3032fe65eeb92'] = 'Secret Key';
 $_MODULE['<{sisow}prestashop>sisow_ccf107a5d46c6501c9f2f4345400dc2e'] = 'Shop ID';
 $_MODULE['<{sisow}prestashop>sisow_b5a7adde1af5c87d7fd797b6245c2a39'] = 'Omschrijving';
 $_MODULE['<{sisow}prestashop>sisow_1eac093a2b681d5b8415430a55303a2c'] = 'Update Purchase ID nadat de betaling is voltooid naar order ID';
