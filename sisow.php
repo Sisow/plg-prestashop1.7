@@ -565,9 +565,6 @@ class Sisow extends PaymentModule
 			$newOption = new PaymentOption();
 			
 			if((bool)Configuration::get('SISOW_LOGOS')){
-				if($method['id'] == 'klarna')
-					$newOption->setLogo( 'https://x.klarnacdn.net/payment-method/assets/badges/generic/klarna.svg');
-				else
 					$newOption->setLogo( _MODULE_DIR_ . 'sisow/images/logo/' . $method['id'] . '.png');
 			}
 			
