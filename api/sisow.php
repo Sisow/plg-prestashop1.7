@@ -200,6 +200,13 @@ class SisowApi
 		
 		$this->arg['ipaddress'] = $this->GetIpAddress();
 		
+		//Software Headers
+		$this->arg['PlatformName'] = 'Prestashop';
+		$this->arg['PlatformVersion'] = _PS_VERSION_;
+		$this->arg['ModuleSupplier'] = 'Buckaroo B.V.';
+		$this->arg['ModuleName'] = 'Buckaroo (former Sisow) Prestashop';
+		$this->arg['ModuleVersion'] = '5.4.3';
+		
 		$this->arg['sha1'] = sha1($this->arg['purchaseid'] . $this->arg['entrancecode'] . $this->arg['amount'] . $this->shopId . $this->merchantId . $this->merchantKey);
 		
 		if(!$this->Send('TransactionRequest', true)){
